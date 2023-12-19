@@ -31,13 +31,16 @@ void wifi_setup()
 {
   WiFi.mode(WIFI_STA);
   WiFi.persistent(false);
-  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  WiFi.hostname(MQTT_NAME);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);  
   //WiFi.setNoDelay(false);
 
   while (WiFi.status() != WL_CONNECTED){
     blinkStatusLed(CRGB::Red);
     delay(100); //wait connected
   }
+
+  Serial.println(WiFi.localIP());
 
   //try to update
   //t_httpUpdate_return ret = ESPhttpUpdate.update(UPDATE_SERVER, UPDATE_PORT, "/update.bin");

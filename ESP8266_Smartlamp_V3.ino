@@ -10,6 +10,7 @@
 #include <ArduinoWebsockets.h>
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <ArduinoOTA.h>
 
 //FASTLED CONFIG
 //#define FASTLED_ALLOW_INTERRUPTS 0 //might not be needed
@@ -60,9 +61,10 @@ void setup() {
   FastLED.setBrightness(  BRIGHTNESS );
   fill_solid( currentPalette, NUM_LEDS, CRGB::Black);
 
-  //Serial.begin(115200);
+  Serial.begin(115200);
   
   wifi_setup();
+  OTA_setup();
   client.setServer(MQTT_SERV, 1883);
   client.setCallback(callback);
   client.setBufferSize(2048);
@@ -72,10 +74,11 @@ void setup() {
 
 void loop() {
   
-  if (millis() > connectionTimer + 10000) {
+  if (millis() > connectionTimer + 5000) {
     connectionTimer = millis();
+    ArduinoOTA.handle();
     if (!client.connected())
-      reconnect();
+      reconnect();    
   }
 
   if (millis() - mqTimer > 100) {
