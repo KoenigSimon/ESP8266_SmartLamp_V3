@@ -64,5 +64,9 @@ void reconnect() {
 
 void resetDevice()
 {
-  ESP.restart();
+  //ESP.restart();
+  lampMode = 2;
+  fill_solid(currentPalette, 16, CRGB::Black);
+  fill_gradient_RGB(leds, NUM_LEDS, CRGB::Black, CRGB::Black);
+  FastLED.setBrightness( BRIGHTNESS );
 }
