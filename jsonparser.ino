@@ -1,6 +1,6 @@
 void ReadData()
 {
-  if (doc["reset"]) resetDevice();
+  if (doc.containsKey("reset")) resetDevice();
 
   if (doc.containsKey("webSocketConnection"))
     websocket_server = doc["webSocketConnection"].as<String>();
